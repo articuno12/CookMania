@@ -1,0 +1,23 @@
+{{ extend 'layout.html' }}
+{{ =A('Manage Recipes',_href=URL('manage'))}}
+
+<h1 align=center>Recipes till now</h1>
+<div align=center>
+<ul>
+{{for i,p in enumerate(pages):}}
+{{if i==items_per_page: break}}
+<i><b>{{ =LI(A(p.title,_href=URL('show', args=p.id)) +" BY- " + db.auth_user[p.created_by].first_name ) }}</b></i>
+<i><b>
+
+</b></i>
+{{pass}}
+</ul>
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">previous</a>
+{{pass}}
+
+{{if len(pages)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">next</a> <br />
+{{pass}}
+
+</div>

@@ -1,0 +1,10 @@
+{{ extend 'layout.html'}}
+{{for i in images:}}
+<img width="200px"
+     src="{{=URL('download', args=i.file)}}" />
+
+     {{pass}}
+<p>
+  Upload images here:
+  {{=form}}
+</p>

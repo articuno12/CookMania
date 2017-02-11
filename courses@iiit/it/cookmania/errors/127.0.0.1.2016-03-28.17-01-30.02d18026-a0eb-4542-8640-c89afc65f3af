@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<class 'sqlite3.IntegrityError'> UNIQUE constraint failed: comments.id"
+p3
+sS'layer'
+p4
+S'/home/kritika/web2py/applications/cookmania/controllers/default.py'
+p5
+sS'code'
+p6
+S"def user():\n    return dict(form=auth())\n\ndef index():\n    pages=db().select(db.recipe.id,db.recipe.title,orderby=db.recipe.id)\n    return dict(pages=pages)\n\n@auth.requires_login()\ndef create():\n    form = SQLFORM(db.recipe).process(next=URL('index'))\n    return dict(form=form)\n\ndef show():\n    this_page = db.recipe(request.args(0,cast=int)) or redirect(URL('index'))\n    db.comments.id.default=this_page.id\n    form=SQLFORM(db.comments).process() if auth.user else login\n    pagecomments = db(db.comments.id==this_page.id).select()\n    images= db(db.image.id==this_page.id).select(db.image.file)\n    return dict(page=this_page, comments=pagecomments, form=form,images=images)\n\n@auth.requires_login()\ndef images():\n    r=db.recipe(request.args(0,cast=int)) or redirect(URL('create'))\n    db.image.id.default=r.id\n    form=SQLFORM(db.image).process() if auth.user else login\n    return dict(form=form)\n\n@auth.requires_login()\ndef edit():\n    this_page=db.recipe(request.args(0,cast=int)) or redirect(URL('index'))\n    form=SQLFORM(db.recipe,this_page).process(next=URL('show',args=request.args))\n    return dict(form=form)\n\nresponse._vars=response._caller(show)\n"
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/kritika/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/kritika/web2py/applications/cookmania/controllers/default.py", line 34, in <module>\n  File "/home/kritika/web2py/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/kritika/web2py/applications/cookmania/controllers/default.py", line 16, in show\n    form=SQLFORM(db.comments).process() if auth.user else login\n  File "/home/kritika/web2py/gluon/html.py", line 2304, in process\n    self.validate(**kwargs)\n  File "/home/kritika/web2py/gluon/html.py", line 2241, in validate\n    if self.accepts(**kwargs):\n  File "/home/kritika/web2py/gluon/sqlhtml.py", line 1722, in accepts\n    self.vars.id = self.table.insert(**fields)\n  File "/home/kritika/web2py/gluon/packages/dal/pydal/objects.py", line 731, in insert\n    ret = self._db._adapter.insert(self, self._listify(fields))\n  File "/home/kritika/web2py/gluon/packages/dal/pydal/adapters/base.py", line 746, in insert\n    raise e\nIntegrityError: UNIQUE constraint failed: comments.id\n'
+p11
+s.

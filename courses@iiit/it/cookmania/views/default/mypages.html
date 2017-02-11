@@ -1,0 +1,22 @@
+{{ extend 'layout.html'}}
+<h1 align=center>Recipes By You:</h1>
+<div align=center font-size=10em>
+
+
+<ul>
+{{for i,p in enumerate(recipes):}}
+{{if i==items_per_page: break}}
+<b><i>
+  {{ =LI(A(p.title,_href=URL('show', args=p.id))) }}
+</i></b>
+{{pass}}
+</ul>
+{{if page:}}
+<a href="{{=URL(args=[page-1])}}">previous</a>
+{{pass}}
+
+{{if len(recipes)>items_per_page:}}
+<a href="{{=URL(args=[page+1])}}">next</a>
+{{pass}}
+
+</div>

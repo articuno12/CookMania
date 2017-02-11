@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<class 'sqlite3.IntegrityError'> NOT NULL constraint failed: likes.unique_key"
+p3
+sS'layer'
+p4
+S'/home/kritika/web2py/applications/cookmania/controllers/default.py'
+p5
+sS'code'
+p6
+S'def user():\n    return dict(form=auth())\n\ndef index():\n    pages=db().select(db.recipe.id,db.recipe.title,orderby=db.recipe.id)\n    return dict(pages=pages)\n\n@auth.requires_login()\ndef create():\n    form = SQLFORM(db.recipe).process(next=URL(\'index\'))\n    return dict(form=form)\n\ndef show():\n    this_page = db.recipe(request.args(0,cast=int)) or redirect(URL(\'index\'))\n    db.comments.recipe_id.default=this_page.id\n    form=SQLFORM(db.comments).process() if auth.user else "login"\n    pagecomments = db(db.comments.recipe_id==this_page.id).select()\n    images= db(db.image.id==this_page.id).select(db.image.file)\n    l=db(db.likes.recipe_id==this_page.id).select()\n    li=len(l)\n    return dict(page=this_page, comments=pagecomments, form=form,images=images,li=li)\n\n@auth.requires_login()\ndef images():\n    r=db.recipe(request.args(0,cast=int)) or redirect(URL(\'create\'))\n    db.image.id.default=r.id\n    form=SQLFORM(db.image).process() if auth.user else login\n    return dict(form=form)\n\n@auth.requires_login()\ndef edit():\n    this_page=db.recipe(request.args(0,cast=int)) or redirect(URL(\'index\'))\n    if not this_page.created_by==auth.user_id :\n        response.flash="You cant edit this"\n        redirect(URL(\'show\',args=request.args))\n    form=SQLFORM(db.recipe,this_page).process(next=URL(\'show\',args=request.args))\n    return dict(form=form)\n\n@auth.requires_login()\ndef mypages():\n    r=db(db.recipe.created_by==auth.user_id).select()\n    return dict (recipes=r)\n\n@auth.requires_login()\ndef add_like():\n    response.flash="hello bb <3"\n    item = db.recipe[request.vars.id]\n    ret = db.likes.validate_and_insert(username=auth.user.id, recipe_id=item.id)\n    if ret.errors:\n        already_liked = (db.likes.username == auth.user.id) & (db.likes.recipe_id == item.id)\n        db(already_liked).delete()\n    li=db(db.likes.recipe_id == item.id).select()\n    return str(len(li))\n\nresponse._vars=response._caller(add_like)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/kritika/web2py/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/kritika/web2py/applications/cookmania/controllers/default.py", line 55, in <module>\n  File "/home/kritika/web2py/gluon/globals.py", line 412, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/kritika/web2py/gluon/tools.py", line 4236, in f\n    return action(*a, **b)\n  File "/home/kritika/web2py/applications/cookmania/controllers/default.py", line 48, in add_like\n    ret = db.likes.validate_and_insert(username=auth.user.id, recipe_id=item.id)\n  File "/home/kritika/web2py/gluon/packages/dal/pydal/objects.py", line 756, in validate_and_insert\n    response.id = self.insert(**new_fields)\n  File "/home/kritika/web2py/gluon/packages/dal/pydal/objects.py", line 731, in insert\n    ret = self._db._adapter.insert(self, self._listify(fields))\n  File "/home/kritika/web2py/gluon/packages/dal/pydal/adapters/base.py", line 746, in insert\n    raise e\nIntegrityError: NOT NULL constraint failed: likes.unique_key\n'
+p11
+s.
