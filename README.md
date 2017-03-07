@@ -9,7 +9,7 @@ To run :<br>
 3. run on terminal : python2.7 web2py.py -a 'your password' -i 127.0.0.1 -p 8000 <br>
 4. open http://127.0.0.1:8000/cookmania/default/index on your browser <br>
 
-<b> Detailed Description </b>
+<b> Detailed Description </b><br>
 Login   page​<br>
 :   Authentication   is   needed   using   USERNAME   and   PASSWORD   for   already  
 registered   users.   If   the   user   fails   to   give   appropriate   details,   error   messages   are   displayed  
