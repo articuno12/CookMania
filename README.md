@@ -15,8 +15,7 @@ Login   page​<br>
 registered   users.   If   the   user   fails   to   give   appropriate   details,   error   messages   are   displayed  
 accordingly. <br>
  
-Registration   page:   Registration    for   newly   visiting   users.   The   registration   form   fields  
-is left as per your choice.<br>
+Registration   page:   Registration    for   newly   visiting   users. 
 Password   Validation:   minimum   8   characters   long,   should   contain   at­least   an  
 alphanumeric character, etc.  <br>
  
